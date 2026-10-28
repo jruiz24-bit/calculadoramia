@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculadora Web</title>
+	<link rel="stylesheet" type="text/css" href="public/css/style.css">
+</head>
+<body>
+
+    <div class="calculadora">
+        
+        <div class="head">
+            <label id="calculadora_data">0</label>
+        </div>
+
+        <div class="body">
+            <button class="btn-clear" onclick="_clear()">C</button>
+            <button class="btn-op" onclick="setOperation('/')">/</button>
+            <button class="btn-op" onclick="setOperation('*')">*</button>
+            <button class="btn-op" onclick="setOperation('-')">-</button>
+
+            <button onclick="addNumber(7)">7</button>
+            <button onclick="addNumber(8)">8</button>
+            <button onclick="addNumber(9)">9</button>
+            <button class="btn-op" onclick="setOperation('+')">+</button>
+
+            <button onclick="addNumber(4)">4</button>
+            <button onclick="addNumber(5)">5</button>
+            <button onclick="addNumber(6)">6</button>
+
+            <button onclick="addNumber(1)">1</button>
+            <button onclick="addNumber(2)">2</button>
+            <button onclick="addNumber(3)">3</button>
+
+            <button onclick="addNumber(0)">0</button>
+            <button onclick="addDot()">.</button>
+            <button class="btn-equal" onclick="setOperation('=')">=</button>
+        </div>
+
+    </div>
+
+</body>
+<script>
+
+    var num1 = 0;
+    var num2 = 0;
+    var ope = "";
+
+    function _clear() {
+        let data = document.getElementById("calculadora_data");
+        data.innerHTML = "0";
+        num1 = 0;
+        num2 = 0;
+        ope = "";
+    }
+
+    function addNumber(value) {
+        console.log(value);
+        let data = document.getElementById("calculadora_data");
+
+        if (data.innerHTML === "0") {
+            data.innerHTML = value;
+        } else {
+            data.innerHTML += value;
+        }
+    }
+
+    function addDot() {
+        let data = document.getElementById("calculadora_data");
+        if (!data.innerHTML.includes('.')) {
+            data.innerHTML += '.';
+        }
+    }
+
+    function setOperation(_ope) {   
+        let data = document.getElementById("calculadora_data");
+        let valorPantalla = parseFloat(data.innerHTML);
+
+        if (_ope !== '=') {
+            ope = _ope;
+            num1 = valorPantalla;
+            data.innerHTML = "0";
+        } else {
+            num2 = valorPantalla;
+            let resultado = 0;
+
+            if (ope === '+') {
+                resultado = num1 + num2;
+            } else if (ope === '-') {
+                resultado = num1 - num2;
+            } else if (ope === '*') {
+                resultado = num1 * num2;
+            } else if (ope === '/') {
+                if (num2 !== 0) {
+                    resultado = num1 / num2;
+                } else {
+                    resultado = "Error";
+                }
+            } else {
+                resultado = valorPantalla;
+            }
+
+            data.innerHTML = resultado;
+            num1 = 0;
+            num2 = 0;
+            ope = "";
+        }
+    }
+
+</script>
+</html>
